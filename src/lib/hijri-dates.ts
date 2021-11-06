@@ -106,16 +106,16 @@ export function getHijriDate(adjustment?: number) {
   var iMonthNames = new Array(
     'Muharram',
     'Safar',
-    "Rabi'ul Awwal",
-    "Rabi'ul Akhir",
-    'Jumadal Ula',
-    'Jumadal Akhira',
+    "Rabi' I",
+    "Rabi' II",
+    'Jumada I',
+    'Jumada Akhira',
     'Rajab',
     "Sha'ban",
     'Ramadan',
     'Shawwal',
-    "Dhul Qa'ada",
-    'Dhul Hijja'
+    "Dhu Al-Qida",
+    'Dhu Al-Hijjah'
   )
   var iDate = hijriDate(adjustment)
   var outputIslamicDate =
