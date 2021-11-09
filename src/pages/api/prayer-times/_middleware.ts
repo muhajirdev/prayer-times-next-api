@@ -1,6 +1,6 @@
 import { CalculationMethod, CalculationParameters } from 'adhan'
 import type { NextRequest } from 'next/server'
-import { getHijriDate } from '../../../lib/hijri-dates'
+import { getHijriDate, getHijriDateString } from '../../../lib/hijri-dates'
 import { getPrayerTimes } from '../../../lib/prayer-times'
 import { calculationMethodMappings, defaultCalculationMethod, madhabMappings } from '../../../lib/prayer-times-params-mapping'
 import { Coordinates } from '../../../lib/types'
@@ -41,12 +41,13 @@ export const middleware = (req: NextRequest) => {
   const coordinates = getCoordinate(req)
   const prayerTimesParams = getPrayerTimesParams(req)
   const prayerTimes = getPrayerTimes(coordinates, prayerTimesParams)
-  const hijriDate = getHijriDate()
+  const hijriDateData = getHijriDate()
 
   const data = {
     geo,
     prayerTimes,
-    hijriDate,
+    hijriDate: getHijriDateString(hijriDateData),
+    hijriDateData: hijriDateData,
   }
 
   return new Response(JSON.stringify(data), {

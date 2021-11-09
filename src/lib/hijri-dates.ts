@@ -94,38 +94,65 @@ export const hijriDate = (adjust?: number) => {
 }
 
 export function getHijriDate(adjustment?: number) {
-  var wdNames = new Array(
-    'Ahad',
-    'Ithnin',
-    'Thulatha',
-    'Arbaa',
-    'Khams',
-    'Jumuah',
-    'Sabt'
+  var dayNames = new Array(
+  'sunday',//  'Ahad',
+  'monday', // 'Ithnin',
+  'tuesday',  // 'Thulatha',
+  'wednesday',  // 'Arbaa',
+  'thursday',  // 'Khams',
+  'fruday',  // 'Jumuah',
+  'saturday',  // 'Sabt'
   )
   var iMonthNames = new Array(
-    'Muharram',
-    'Safar',
-    "Rabi' I",
-    "Rabi' II",
-    'Jumada I',
-    'Jumada Akhira',
-    'Rajab',
-    "Sha'ban",
-    'Ramadan',
-    'Shawwal',
-    "Dhu Al-Qida",
-    'Dhu Al-Hijjah'
+    1, //'Muharram',
+    2, //'Safar',
+    3, //"Rabi' I",
+    4, //"Rabi' II",
+    5, //'Jumada I',
+    6, //'Jumada Akhira',
+    7, //'Rajab',
+    8, //"Sha'ban",
+    9, //'Ramadan',
+    10, //'Shawwal',
+    11, //"Dhu Al-Qida",
+    12, //'Dhu Al-Hijjah'
   )
+
   var iDate = hijriDate(adjustment)
-  var outputIslamicDate =
-    wdNames[iDate[4]] +
-    ', ' +
-    iMonthNames[iDate[6]] +
-    ' ' +
-    iDate[5] +
-    ', ' +
-    iDate[7] +
-    ' AH'
-  return outputIslamicDate
+  return {
+    dayName: dayNames[iDate[4]],
+    month: iMonthNames[iDate[6]],
+    date: iDate[5],
+    year: iDate[7],
+  }
+
+}
+
+const dayNamesMapping = {
+  'sunday': 'Ahad',
+  'monday': 'Ithnin',
+  'tuesday': 'Thulatha',
+  'wednesday': 'Arbaa',
+  'thursday': 'Khams',
+  'fruday': 'Jumuah',
+  'saturday': 'Sabt'
+}
+
+const montNamesMapping =  {
+    "1": 'Muharram',
+    "2": 'Safar',
+    "3": "Rabi' I",
+    "4": "Rabi' II",
+    "5": 'Jumada I',
+    "6": 'Jumada Akhira',
+    "7": 'Rajab',
+    "8": "Sha'ban",
+    "9": 'Ramadan',
+    "10":'Shawwal',
+    "11":"Dhu Al-Qida",
+    "12":'Dhu Al-Hijjah'
+}
+
+export const getHijriDateString = ({dayName, month, date, year}) => {
+  return `${dayNamesMapping[dayName]} ${montNamesMapping[month]} ${date}, ${year} AH`
 }
