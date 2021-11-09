@@ -19,7 +19,7 @@ export const getPrayerTimes = (
 
   return {
     fajr: prayerTimes.fajr,
-    // sunriseTime: prayerTimes.sunrise,
+    sunriseTime: prayerTimes.sunrise,
     dhuhr: prayerTimes.dhuhr,
     asr: prayerTimes.asr,
     maghrib: prayerTimes.maghrib,

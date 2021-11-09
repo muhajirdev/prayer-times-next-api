@@ -1,6 +1,8 @@
+import { CalculationMethod, CalculationParameters } from 'adhan'
 import type { NextRequest } from 'next/server'
 import { getHijriDate } from '../../../lib/hijri-dates'
 import { getPrayerTimes } from '../../../lib/prayer-times'
+import { calculationMethodMappings, defaultCalculationMethod, madhabMappings } from '../../../lib/prayer-times-params-mapping'
 import { Coordinates } from '../../../lib/types'
 
 // return coordinate from request's querystring if available
@@ -21,10 +23,24 @@ const getCoordinate = (req: NextRequest): Coordinates => {
   return { latitude: geo.latitude, longitude: geo.longitude }
 }
 
+const getPrayerTimesParams = (req: NextRequest):CalculationParameters => {
+  const calculationMethodParams = req.nextUrl.searchParams.get('calculationMethod')
+  const calculationMethod = calculationMethodMappings[calculationMethodParams] || defaultCalculationMethod
+
+  const madhabParams = req.nextUrl.searchParams.get('madhab')
+  const madhab = madhabMappings[madhabParams]
+  if (madhab) {
+    calculationMethod.madhab = madhab
+  }
+
+  return calculationMethod
+}
+
 export const middleware = (req: NextRequest) => {
   const { geo } = req
   const coordinates = getCoordinate(req)
-  const prayerTimes = getPrayerTimes(coordinates)
+  const prayerTimesParams = getPrayerTimesParams(req)
+  const prayerTimes = getPrayerTimes(coordinates, prayerTimesParams)
   const hijriDate = getHijriDate()
 
   const data = {

@@ -121,10 +121,10 @@ export function getHijriDate(adjustment?: number) {
   var outputIslamicDate =
     wdNames[iDate[4]] +
     ', ' +
-    iDate[5] +
-    ' ' +
     iMonthNames[iDate[6]] +
     ' ' +
+    iDate[5] +
+    ', ' +
     iDate[7] +
     ' AH'
   return outputIslamicDate
