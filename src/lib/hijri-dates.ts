@@ -4,18 +4,31 @@ function gmod(n, m) {
   return ((n % m) + m) % m
 }
 
-export const hijriDate = (adjust?: number) => {
-  var today = new Date()
-  if (adjust) {
-    const adjustmili = 1000 * 60 * 60 * 24 * adjust
-    const todaymili = today.getTime() + adjustmili
-    today = new Date(todaymili)
-  }
+
+export type DateData = {
+  day: number;
+  month: number;
+  year: number;
+}
+
+const getServerDateData = ():DateData => {
+  const today = new Date();
   let day = today.getDate()
   let month = today.getMonth()
   let year = today.getFullYear()
+  return {day,month,year}
+}
+
+export const hijriDate = (todayDateData?: DateData) => {
+  let today = todayDateData;
+  if (!today.day || !today.month || !today.year) today = getServerDateData()
+
+  let day = today.day
+  let month = today.month // Note that month in javascript start with index 0
+  let year = today.year
   let m = month + 1
   let y = year
+
   if (m < 3) {
     y -= 1
     m += 12
@@ -56,12 +69,7 @@ export const hijriDate = (adjust?: number) => {
   }
   year = cc - 4716
 
-  let wd
-  if (adjust) {
-    wd = gmod(jd + 1 - adjust, 7) + 1
-  } else {
-    wd = gmod(jd + 1, 7) + 1
-  }
+  let wd = gmod(jd + 1, 7) + 1
 
   let iyear = 10631 / 30
   let epochastro = 1948084
@@ -93,14 +101,14 @@ export const hijriDate = (adjust?: number) => {
   return myRes
 }
 
-export function getHijriDate(adjustment?: number) {
+export function getHijriDate(todayDateData?: DateData) {
   var dayNames = new Array(
   'sunday',//  'Ahad',
   'monday', // 'Ithnin',
   'tuesday',  // 'Thulatha',
   'wednesday',  // 'Arbaa',
   'thursday',  // 'Khams',
-  'fruday',  // 'Jumuah',
+  'friday',  // 'Jumuah',
   'saturday',  // 'Sabt'
   )
   var iMonthNames = new Array(
@@ -118,7 +126,7 @@ export function getHijriDate(adjustment?: number) {
     12, //'Dhu Al-Hijjah'
   )
 
-  var iDate = hijriDate(adjustment)
+  var iDate = hijriDate(todayDateData)
   return {
     dayName: dayNames[iDate[4]],
     month: iMonthNames[iDate[6]],
@@ -134,7 +142,7 @@ const dayNamesMapping = {
   'tuesday': 'Thulatha',
   'wednesday': 'Arbaa',
   'thursday': 'Khams',
-  'fruday': 'Jumuah',
+  'friday': 'Jumuah',
   'saturday': 'Sabt'
 }
 
