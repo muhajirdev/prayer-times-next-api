@@ -6,24 +6,24 @@ function gmod(n, m) {
 
 
 export type DateData = {
-  day: number;
+  date: number;
   month: number;
   year: number;
 }
 
 const getServerDateData = ():DateData => {
   const today = new Date();
-  let day = today.getDate()
+  let date = today.getDate()
   let month = today.getMonth()
   let year = today.getFullYear()
-  return {day,month,year}
+  return {date,month,year}
 }
 
 export const hijriDate = (todayDateData?: DateData) => {
   let today = todayDateData;
-  if (!today.day || !today.month || !today.year) today = getServerDateData()
+  if (!today.date || !today.month || !today.year) today = getServerDateData()
 
-  let day = today.day
+  let date = today.date
   let month = today.month // Note that month in javascript start with index 0
   let year = today.year
   let m = month + 1
@@ -41,14 +41,14 @@ export const hijriDate = (todayDateData?: DateData) => {
     if (m > 10) b = -10
     if (m == 10) {
       b = 0
-      if (day > 4) b = -10
+      if (date > 4) b = -10
     }
   }
 
   let jd =
     Math.floor(365.25 * (y + 4716)) +
     Math.floor(30.6001 * (m + 1)) +
-    day +
+    date +
     b -
     1524
 
@@ -61,7 +61,7 @@ export const hijriDate = (todayDateData?: DateData) => {
   let cc = Math.floor((bb - 122.1) / 365.25)
   let dd = Math.floor(365.25 * cc)
   let ee = Math.floor((bb - dd) / 30.6001)
-  day = bb - dd - Math.floor(30.6001 * ee)
+  date = bb - dd - Math.floor(30.6001 * ee)
   month = ee - 1
   if (ee > 13) {
     cc += 1
@@ -89,7 +89,7 @@ export const hijriDate = (todayDateData?: DateData) => {
 
   var myRes = new Array(8)
 
-  myRes[0] = day //calculated day (CE)
+  myRes[0] = date //calculated day (CE)
   myRes[1] = month - 1 //calculated month (CE)
   myRes[2] = year //calculated year (CE)
   myRes[3] = jd - 1 //julian day number

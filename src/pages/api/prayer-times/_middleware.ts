@@ -37,12 +37,12 @@ const getPrayerTimesParams = (req: NextRequest):CalculationParameters => {
 }
 
 const getDateData = (req: NextRequest): DateData => {
-  const day = req.nextUrl.searchParams.get('day')
+  const date = req.nextUrl.searchParams.get('date')
   const month = req.nextUrl.searchParams.get('month')
   const year = req.nextUrl.searchParams.get('year')
 
   return  {
-    day: Number(day),
+    date: Number(date),
     month: Number(month),
     year: Number(year)
   }
