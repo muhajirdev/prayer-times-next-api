@@ -154,5 +154,5 @@ const montNamesMapping =  {
 }
 
 export const getHijriDateString = ({dayName, month, date, year}) => {
-  return `${dayNamesMapping[dayName]} ${montNamesMapping[month]} ${date}, ${year} AH`
+  return `${dayNamesMapping[dayName]}, ${montNamesMapping[month]} ${date}, ${year} AH`
 }
